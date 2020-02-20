@@ -1,0 +1,85 @@
+$backgroundColor: #383e42;
+$primaryColor:  #6a727b;
+$secondaryColor: #fc9f0f;
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font-size: inherit;
+  background-color: $primaryColor;
+  color: white;
+}
+
+.calc {
+  margin-top: 20px;
+  background-color: $primaryColor;
+  width: 300px;
+  height: 494px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 9px;
+  
+  &__result {
+    background-color: $backgroundColor;
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    color: white;
+    padding-right: 15px;
+
+    p {
+      font-size: 32px;
+    }
+
+    h2 {
+      font-size: 50px;
+    }
+  }
+
+  &__rows {
+
+    .row {
+      height: 70px;
+      display: flex;
+
+      > button {
+        width: 25%;
+        cursor: pointer;
+        text-align: center;
+        line-height: 70px;
+      }
+
+      > button:not(:last-child) {
+        border-right: 1px solid $backgroundColor;
+      }
+
+      > button:last-child {
+        background-color: $secondaryColor;
+      }
+    }
+
+    .row:last-child {
+      >button {
+        width: 25%;
+      }
+
+      > button:first-child {
+        width: calc(50% + 1px);
+      }
+    }
+
+    .row:not(:last-child) {
+      border-bottom: 1px solid $backgroundColor;
+    }
+
+  }
+}
