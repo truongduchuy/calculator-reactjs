@@ -45,6 +45,7 @@ const Rows = ({ onClick }) => {
     </div>
   );
 }
+
 export default () => {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('');
@@ -65,18 +66,18 @@ export default () => {
     setResult("");
   }
 
-  const onClick = (btnValue) => {
+  const handleClick = (btnValue) => {
     if (btnValue === 'AC') clear();
     else if (btnValue === "=") calculate(expression);
     else {
-      setExpression(`${expression}${btnValue}`);
+      setExpression(expression + btnValue);
     }
   }
 
   return (
     <div className="calc">
       <Result expression={expression} result={result} />
-      <Rows onClick={onClick} />
+      <Rows onClick={handleClick} />
     </div>
   );
 }
