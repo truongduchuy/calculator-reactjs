@@ -15,8 +15,8 @@ const Rows = ({ onClick }) => {
     <div className="calc__rows">
       <div className="row">
         <button name="AC" onClick={e => onClick(e.target.name)}>AC</button>
-        <button name="delete" onClick={e => onClick(e.target.name)}>DELETE</button>
-        <button name="%" onClick={e => onClick(e.target.name)}>%</button>
+        <button name="(" onClick={e => onClick(e.target.name)}>(</button>
+        <button name=")" onClick={e => onClick(e.target.name)}>)</button>
         <button name="/" onClick={e => onClick(e.target.name)}>/</button>
       </div>
       <div className="row">
@@ -49,22 +49,14 @@ export default () => {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('');
 
-  const backspace = () => {
-    try {
-      setExpression(expression.slice(0, -1));
-    }
-    catch (e) {
-      setExpression('error');
-    }
-  }
-
   const calculate = (exp) => {
     try {
       console.log(exp);
       setResult(eval(exp));
     }
     catch (e) {
-      setResult('error');
+      // setResult('error');
+      clear();
     }
   }
 
@@ -76,12 +68,6 @@ export default () => {
   const onClick = (btnValue) => {
     if (btnValue === 'AC') clear();
     else if (btnValue === "=") calculate(expression);
-    else if (btnValue === 'delete') backspace();
-    else if (btnValue === '%') {
-      setExpression(`(${expression})/100`);
-      calculate(`(${expression})/100`);
-
-    }
     else {
       setExpression(`${expression}${btnValue}`);
     }

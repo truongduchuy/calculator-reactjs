@@ -19,6 +19,9 @@ button {
   color: white;
 }
 
+
+
+
 .calc {
   margin-top: 20px;
   background-color: $primaryColor;
@@ -47,6 +50,12 @@ button {
 
   &__rows {
 
+    .row:first-child{
+      > button:not(:last-child){
+        background-color: #495157;
+      }
+    }
+
     .row {
       height: 70px;
       display: flex;
@@ -66,6 +75,7 @@ button {
         background-color: $secondaryColor;
       }
     }
+
 
     .row:last-child {
       >button {
