@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './App.scss';
 
 const Result = ({ result, expression }) => {
@@ -14,71 +14,75 @@ const Rows = ({ onClick }) => {
   return (
     <div className="calc__rows">
       <div className="row">
-        <button name="AC" onClick={e => onClick(e.target.name)}>AC</button>
-        <button name="(" onClick={e => onClick(e.target.name)}>(</button>
-        <button name=")" onClick={e => onClick(e.target.name)}>)</button>
-        <button name="/" onClick={e => onClick(e.target.name)}>/</button>
+        <button onClick={e => onClick('AC')}>AC</button>
+        <button onClick={e => onClick('(')}>(</button>
+        <button onClick={e => onClick(')')}>)</button>
+        <button onClick={e => onClick('/')}>/</button>
       </div>
       <div className="row">
-        <button name="7" onClick={e => onClick(e.target.name)}>7</button>
-        <button name="8" onClick={e => onClick(e.target.name)}>8</button>
-        <button name="9" onClick={e => onClick(e.target.name)}>9</button>
-        <button name="*" onClick={e => onClick(e.target.name)}>X</button>
+        <button onClick={e => onClick('7')}>7</button>
+        <button onClick={e => onClick('8')}>8</button>
+        <button onClick={e => onClick('9')}>9</button>
+        <button onClick={e => onClick('*')}>X</button>
       </div>
       <div className="row">
-        <button name="4" onClick={e => onClick(e.target.name)}>4</button>
-        <button name="5" onClick={e => onClick(e.target.name)}>5</button>
-        <button name="6" onClick={e => onClick(e.target.name)}>6</button>
-        <button name="-" onClick={e => onClick(e.target.name)}>-</button>
+        <button onClick={e => onClick('4')}>4</button>
+        <button onClick={e => onClick('5')}>5</button>
+        <button onClick={e => onClick('6')}>6</button>
+        <button onClick={e => onClick('-')}>-</button>
       </div>
       <div className="row">
-        <button name="1" onClick={e => onClick(e.target.name)}>1</button>
-        <button name="2" onClick={e => onClick(e.target.name)}>2</button>
-        <button name="3" onClick={e => onClick(e.target.name)}>3</button>
-        <button name="+" onClick={e => onClick(e.target.name)}>+</button>
+        <button onClick={e => onClick('1')}>1</button>
+        <button onClick={e => onClick('2')}>2</button>
+        <button onClick={e => onClick('3')}>3</button>
+        <button onClick={e => onClick('+')}>+</button>
       </div>
       <div className="row">
-        <button name="0" onClick={e => onClick(e.target.name)}>0</button>
-        <button name="." onClick={e => onClick(e.target.name)}>.</button>
-        <button name="=" onClick={e => onClick(e.target.name)}>=</button>
+        <button onClick={e => onClick('0')}>0</button>
+        <button onClick={e => onClick('.')}>.</button>
+        <button onClick={e => onClick('=')}>=</button>
       </div>
     </div>
   );
 }
 
-export default () => {
-  const [expression, setExpression] = useState('');
-  const [result, setResult] = useState('');
+class App extends Component {
+  state = {
+    expression: '',
+    result: ''
+  }
 
-  const calculate = (exp) => {
+  calculate = (exp) => {
     try {
-      console.log(exp);
-      setResult(eval(exp));
+      this.setState({ result: eval(exp) })
     }
     catch (e) {
-      // setResult('error');
-      clear();
+      this.clear();
     }
   }
 
-  const clear = () => {
-    setExpression("");
-    setResult("");
+  clear = () => {
+    this.setState({ expression: '', result: '' })
   }
 
-  const handleClick = (btnValue) => {
-    if (btnValue === 'AC') clear();
-    else if (btnValue === "=") calculate(expression);
+  handleClick = (btnValue) => {
+    if (btnValue === 'AC') this.clear();
+    else if (btnValue === "=") this.calculate(this.state.expression);
     else {
-      setExpression(expression + btnValue);
+      this.setState({ expression: this.state.expression + btnValue })
     }
   }
 
-  return (
-    <div className="calc">
-      <Result expression={expression} result={result} />
-      <Rows onClick={handleClick} />
-    </div>
-  );
+  render() {
+    const { expression, result } = this.state;
+
+    return (
+      <div className="calc">
+        <Result expression={expression} result={result} />
+        <Rows onClick={this.handleClick} />
+      </div>
+    );
+  }
 }
 
+export default App;
